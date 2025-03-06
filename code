@@ -1,0 +1,69 @@
+import pygame
+
+width = 800
+height = 600
+display = pygame.display.set_mode((width, height))
+pygame.init()
+
+direction = "up"
+pixel_w_h = 8
+mp_w, mp_h = 400, 300
+
+display.fill((255, 255, 255))
+pygame.draw.rect(display, (0, 0, 0), (mp_w, mp_h, pixel_w_h, pixel_w_h))
+
+pygame.display.set_caption("LANGTON'S ANT")
+icon = pygame.image.load("C:/Users/Dell/Downloads/ant_D6L_icon.ico")
+pygame.display.set_icon(icon)
+
+pygame.display.update()
+clock = pygame.time.Clock()
+
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            quit()
+
+    current_color = display.get_at((mp_w, mp_h))[:3]
+
+    if current_color == (255, 255, 255):
+        if direction == "right":
+            direction = "down"
+            pygame.draw.rect(display, (155, 48, 255), (mp_w, mp_h, pixel_w_h, pixel_w_h))  
+            mp_h += pixel_w_h  
+        elif direction == "up":
+            direction = "right"
+            pygame.draw.rect(display, (155, 48, 255), (mp_w, mp_h, pixel_w_h, pixel_w_h))  
+            mp_w += pixel_w_h  
+        elif direction == "left":
+            direction = "up"
+            pygame.draw.rect(display, (155, 48, 255), (mp_w, mp_h, pixel_w_h, pixel_w_h))  
+            mp_h -= pixel_w_h  
+        elif direction == "down":
+            direction = "left"
+            pygame.draw.rect(display, (155, 48, 255), (mp_w, mp_h, pixel_w_h, pixel_w_h))  
+            mp_w -= pixel_w_h  
+
+    elif current_color == (155, 48, 255):
+        if direction == "right":
+            direction = "up"
+            pygame.draw.rect(display, (255, 255, 255), (mp_w, mp_h, pixel_w_h, pixel_w_h))  
+            mp_h -= pixel_w_h  
+        elif direction == "up":
+            direction = "left"
+            pygame.draw.rect(display, (255, 255, 255), (mp_w, mp_h, pixel_w_h, pixel_w_h))  
+            mp_w -= pixel_w_h  
+        elif direction == "left":
+            direction = "down"
+            pygame.draw.rect(display, (255, 255, 255), (mp_w, mp_h, pixel_w_h, pixel_w_h))  
+            mp_h += pixel_w_h  
+        elif direction == "down":
+            direction = "right"
+            pygame.draw.rect(display, (255, 255, 255), (mp_w, mp_h, pixel_w_h, pixel_w_h))  
+            mp_w += pixel_w_h  
+
+    pygame.display.update()
+    clock.tick(10)
+
+print("End")
